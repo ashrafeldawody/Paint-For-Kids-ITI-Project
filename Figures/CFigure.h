@@ -23,7 +23,6 @@ public:
 	virtual string getShapeType() = 0;
 	virtual CFigure * Clone() = 0;
 	virtual void DrawMe(GUI* pOut)  = 0 ;		//Draw the figure
-	
 	void Unfill();	//unfill figure
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
@@ -38,7 +37,7 @@ public:
 	virtual string getSaveData() = 0;
 
 	//virtual void Rotate() = 0;	//Rotate the figure
-	virtual void Resize(float) = 0;	//Resize the figure
+	virtual bool Resize(float) = 0;	//Resize the figure
 	//virtual void Move() = 0;		//Move the figure
 
 	//virtual void Save(ofstream &OutFile) = 0;	//Save the figure parameters to the file

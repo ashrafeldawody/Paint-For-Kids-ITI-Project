@@ -7,27 +7,38 @@ CHexagon::CHexagon(Point _center, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
     radius = 100;
     center = _center;
-    generatePoints();
-
 }
 
-void CHexagon::generatePoints()
+bool CHexagon::generatePoints()
 {
+    Point temp[6];
     for (int i = 0; i < 6; i++) {
-        points[i].x = center.x + radius * cos(2 * PI * i / 6);
-        points[i].y = center.y + radius * sin(2 * PI * i / 6);
+        temp[i].x = center.x + radius * cos(2 * PI * i / 6);
+        temp[i].y = center.y + radius * sin(2 * PI * i / 6);
+        if (!Helpers::checkPointInsideDrawArea(temp[i].x, temp[i].y))
+            return false;
     }
+    //if loop didn't return false.. it means all points are valid
+    for (int i = 0; i < 6; i++) {
+        points[i] = temp[i];
+    }
+
+    return true;
 }
 
 void CHexagon::DrawMe(GUI* pGUI)
 {
-	//Call Output::DrawRect to draw a Square on the screen	
 	pGUI->DrawHexagon(points, FigGfxInfo, Selected);
 }
-void CHexagon::Resize(float factor)
+bool CHexagon::Resize(float factor)
 {
+    //try to resize shape
     radius *= factor;
-    generatePoints();
+    //if one of the points outside draw area..
+    if (generatePoints()) return true;
+    //change radius back to it's original value
+    radius /= factor;
+    return false;
 }
 bool CHexagon::PointInFigure(int x,int y)
 {
@@ -101,4 +112,3 @@ string CHexagon::getShapeType()
 {
     return "Hexagon";
 }
-

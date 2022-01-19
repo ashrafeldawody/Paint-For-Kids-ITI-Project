@@ -74,4 +74,10 @@ public:
         if (c == "UNFILLED")    return NULL;
         return GREEN;
     }
+    static bool checkPointInsideDrawArea(int x, int y) {
+        if (y < UI.ToolBarHeight || y > UI.height - UI.StatusBarHeight || x > UI.width || x < 0) {
+            return false;
+        }
+        return true;
+    }
 };

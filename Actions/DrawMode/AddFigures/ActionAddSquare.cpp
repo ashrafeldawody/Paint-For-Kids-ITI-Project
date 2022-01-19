@@ -44,7 +44,7 @@ void ActionAddSquare::Execute()
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-		
+
 	//Step 3 - Create a Square with the parameters read from the user
 	CSquare *R=new CSquare(topLeft, SideLength, SqrGfxInfo);
 

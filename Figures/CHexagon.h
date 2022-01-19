@@ -10,9 +10,9 @@ private:
 	int radius;
 public:
 	CHexagon(Point, GfxInfo FigureGfxInfo);
-	void generatePoints();
+	bool generatePoints();
 	void DrawMe(GUI* pOut);
-	void Resize(float);
+	bool Resize(float);
 	bool PointInFigure(int,int);
 	string getSaveData();
 	string GetShapeInfo();

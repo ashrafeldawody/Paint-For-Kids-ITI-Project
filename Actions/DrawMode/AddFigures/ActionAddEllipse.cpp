@@ -29,7 +29,10 @@ void ActionAddEllipse::Execute()
 	pGUI->getPointInsideDrawArea(P2.x, P2.y);
 
 	pGUI->ClearStatusBar();
-
+	if (!Helpers::checkPointInsideDrawArea(P1.x, P1.y) || !Helpers::checkPointInsideDrawArea(P2.x, P2.y)) {
+		pGUI->PrintMessage("Shape can't fit into the drawing area");
+		return;
+	}
 	//Step 3 - Create a Square with the parameters read from the user
 	CEllipse* R = new CEllipse(P1, P2, SqrGfxInfo);
 

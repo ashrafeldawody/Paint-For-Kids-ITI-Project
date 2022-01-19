@@ -19,6 +19,7 @@ Point CSquare::getSecondPoint() {
 	p.y = TopLeftCorner.y + length;
 	return p;
 }
+
 bool CSquare::PointInFigure(int x, int y)
 {
 	Point Left = TopLeftCorner;
@@ -30,9 +31,15 @@ bool CSquare::PointInFigure(int x, int y)
 	else
 		return false;
 }
-void CSquare::Resize(float size)
+bool CSquare::Resize(float size)
 {
 	length *= size;
+	//if both points inside draw area
+	if (Helpers::checkPointInsideDrawArea(TopLeftCorner.x, TopLeftCorner.y) && Helpers::checkPointInsideDrawArea(TopLeftCorner.x + length, TopLeftCorner.y + length))
+		return true;
+
+	length /= size;
+	return false;
 }
 string CSquare::getSaveData()
 {
@@ -68,3 +75,4 @@ string CSquare::getShapeType()
 {
 	return "Square";
 }
+

@@ -16,9 +16,13 @@ void ActionResizeSelected::Execute()
 
 	if (fig != NULL)
 	{
-		fig->Resize(resizeFactor);
-		pManager->UpdateInterface();
-		pGUI->PrintMessage("Shape Resized Successfully");
+		if (fig->Resize(resizeFactor)) {
+			pManager->UpdateInterface();
+			pGUI->PrintMessage("Shape Resized Successfully");
+		}
+		else {
+			pGUI->PrintMessage("Resized shape can't fit into the drawing area");
+		}
 	}
 	else
 	{

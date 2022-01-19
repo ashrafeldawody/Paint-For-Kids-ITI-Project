@@ -12,7 +12,7 @@ public:
 	void DrawMe(GUI* pOut);
 	Point getSecondPoint();
 	bool PointInFigure(int, int);
-	void Resize(float);
+	bool Resize(float);
 	string getSaveData();
 	string GetShapeInfo();
 	CFigure* Clone();

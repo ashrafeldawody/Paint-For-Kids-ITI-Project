@@ -28,7 +28,12 @@ void ActionAddHexagon::Execute()
 
 
 	CHexagon* R = new CHexagon(point, SqrGfxInfo);
-
+	//hexagon violates draw area borders
+	if (!R->generatePoints()){
+		pGUI->PrintMessage("Shape can't fit into the drawing area");
+		delete R;
+		return;
+	}
 
 	pManager->AddFigure(R);
 }

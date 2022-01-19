@@ -12,13 +12,20 @@ void CEllipse::DrawMe(GUI* pGUI)
 	pGUI->DrawEllipse(FirstPoint, SecondPoint, FigGfxInfo, Selected);
 
 }
-void CEllipse::Resize(float factor)
+bool CEllipse::Resize(float factor)
 {
 	int x = SecondPoint.x - FirstPoint.x;
 	int y = SecondPoint.y - FirstPoint.y;
 
+	Point tempSecondPoint = SecondPoint;
 	SecondPoint.x = FirstPoint.x + (x * factor);
 	SecondPoint.y = FirstPoint.y + (y * factor);
+	
+	if (Helpers::checkPointInsideDrawArea(SecondPoint.x, SecondPoint.y))
+		return true;
+
+	SecondPoint = tempSecondPoint;
+	return false;
 }
 Point CEllipse::getCenter()
 {
@@ -77,4 +84,3 @@ string CEllipse::getShapeType()
 {
 	return "Ellipse";
 }
-

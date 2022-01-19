@@ -1,5 +1,4 @@
-#ifndef CELLIPSE_H
-#define CELLIPSE_H
+#pragma once
 
 #include "CFigure.h"
 
@@ -10,7 +9,7 @@ private:
 public:
 	CEllipse(Point,Point, GfxInfo FigureGfxInfo);
 	void DrawMe(GUI* pOut);
-	void Resize(float);
+	bool Resize(float);
 	Point getCenter();
 	bool PointInFigure(int,int);
 	string getSaveData();
@@ -18,5 +17,3 @@ public:
 	CFigure * Clone();
 	string getShapeType();
 };
-
-#endif
