@@ -20,6 +20,7 @@ public:
 	void SetSelected(bool);	//select/unselect the figure
 	bool IsSelected() const;	//check whether fig is selected
 	color getFillColor();
+	virtual string getShapeType() = 0;
 	virtual CFigure * Clone() = 0;
 	virtual void DrawMe(GUI* pOut)  = 0 ;		//Draw the figure
 	

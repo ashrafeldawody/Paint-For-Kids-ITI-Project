@@ -10,7 +10,7 @@ void ActionPlayByFill::Execute()
 	GUI* pGUI = pManager->GetGUI();
 	if(pManager->numberOfShapes() > 0) {
 		string color = pManager->getRandomExistingColor();
-		int numberOfShapesOfColor = pManager->countByFillColor(color);
+		int numberOfShapesOfColor = pManager->countByColor(color);
 
 		pGUI->PrintMessage("Pick All "+ color + " Shapes");
 		for (int i = 0; i < numberOfShapesOfColor; i++) {

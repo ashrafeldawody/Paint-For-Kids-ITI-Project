@@ -97,3 +97,8 @@ CFigure* CHexagon::Clone()
     return new CHexagon(*this);
 }
 
+string CHexagon::getShapeType()
+{
+    return "Hexagon";
+}
+

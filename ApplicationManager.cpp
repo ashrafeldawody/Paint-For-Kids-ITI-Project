@@ -353,7 +353,6 @@ void ApplicationManager::backupFigList()
 		FigListBackup[i] = FigList[i]->Clone();
 	}
 	FigCountBackup = FigCount;
-	cout << "Backup\n";
 }
 void ApplicationManager::restoreFigList()
 {
@@ -362,7 +361,6 @@ void ApplicationManager::restoreFigList()
 	}
 	FigCount = FigCountBackup;
 	UpdateInterface();
-	cout << "Restore\n";
 
 }
 
@@ -371,30 +369,60 @@ void ApplicationManager::clearFigListBackup() {
 		delete FigListBackup[i];
 	}
 	FigCountBackup = 0;
-	cout << "Clear\n";
 
 }
 int ApplicationManager::numberOfShapes()
 {
 	return FigCount;
 }
-int ApplicationManager::countByFillColor(string color){
+int ApplicationManager::countByColor(string color){
 	int count = 0;
 	for (int i = 0; i < FigCount; i++)
 		if (FigList[i]->getFillColor() == Helpers::getColorFromString(color))
 			count++;
 	return count;
 }
+int ApplicationManager::countByType(string type) {
+	int count = 0;
+	for (int i = 0; i < FigCount; i++)
+		if (FigList[i]->getShapeType() == type)
+			count++;
+	return count;
+}
+int ApplicationManager::countByTypeAndColor(string type,string color) {
+	int count = 0;
+	for (int i = 0; i < FigCount; i++)
+		if (FigList[i]->getShapeType() == type && FigList[i]->getFillColor() == Helpers::getColorFromString(color))
+			count++;
+	return count;
+}
 
 string ApplicationManager::getRandomExistingColor()
 {
-	for (int i = FigCount - 1; i >= 0; i--) {
-		color tempClr = FigList[i]->getFillColor();
-		if (tempClr != NULL)
-			return Helpers::getColorName(tempClr);
+	//generating Random index 
+	int RandomIndex = rand() % FigCount;
+
+	color tempClr = FigList[RandomIndex]->getFillColor();
+
+	if (tempClr != NULL){
+		return Helpers::getColorName(tempClr);
 	}
-	return "UNFILLED";
 }
+string ApplicationManager::getRandomExistingType()
+{
+	//generating Random index 
+	int RandomIndex = rand() % FigCount;
+	return FigList[RandomIndex]->getShapeType();
+}
+void ApplicationManager::getRandomColorAndType(string &type,string &color)
+{
+	//generating Random index 
+	int RandomIndex = rand() % FigCount;
+	type = FigList[RandomIndex]->getShapeType();
+	color = Helpers::getColorName(FigList[RandomIndex]->getFillColor());
+}
+
+
 ////////////////////////////////////////////////////////////////////////////////////
 //Destructor
 ApplicationManager::~ApplicationManager()

@@ -16,5 +16,6 @@ public:
 	string getSaveData();
 	string GetShapeInfo();
 	CFigure* Clone();
+	string getShapeType();
 };
 

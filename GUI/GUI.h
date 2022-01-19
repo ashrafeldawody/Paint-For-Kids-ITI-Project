@@ -263,13 +263,13 @@ public:
 			ColorsMenuImages[COLOR_BLACK] = "images\\ColorMenu\\none.jpg";
 		else
 			ColorsMenuImages[COLOR_BLACK] = "images\\ColorMenu\\black.jpg";
-		ColorsMenuImages[COLOR_GRAY] = "images\\ColorMenu\\gray.jpg";
-		ColorsMenuImages[COLOR_RED] = "images\\ColorMenu\\red.jpg";
-		ColorsMenuImages[COLOR_YELLOW] = "images\\ColorMenu\\yellow.jpg";
-		ColorsMenuImages[COLOR_GREEN] = "images\\ColorMenu\\green.jpg";
-		ColorsMenuImages[COLOR_NAVY] = "images\\ColorMenu\\navy.jpg";
-		ColorsMenuImages[COLOR_DEEPORANGE] = "images\\ColorMenu\\darkorange.jpg";
-		ColorsMenuImages[COLOR_DEEPPINK] = "images\\ColorMenu\\deeppink.jpg";
+			ColorsMenuImages[COLOR_GRAY] = "images\\ColorMenu\\gray.jpg";
+			ColorsMenuImages[COLOR_RED] = "images\\ColorMenu\\red.jpg";
+			ColorsMenuImages[COLOR_YELLOW] = "images\\ColorMenu\\yellow.jpg";
+			ColorsMenuImages[COLOR_GREEN] = "images\\ColorMenu\\green.jpg";
+			ColorsMenuImages[COLOR_NAVY] = "images\\ColorMenu\\navy.jpg";
+			ColorsMenuImages[COLOR_DEEPORANGE] = "images\\ColorMenu\\darkorange.jpg";
+			ColorsMenuImages[COLOR_DEEPPINK] = "images\\ColorMenu\\deeppink.jpg";
 
 		//TODO: Prepare images for each menu item and add it to the list
 		ClearToolBarArea();

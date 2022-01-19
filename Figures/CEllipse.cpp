@@ -73,3 +73,8 @@ CFigure* CEllipse::Clone()
 	return new CEllipse(*this);
 }
 
+string CEllipse::getShapeType()
+{
+	return "Ellipse";
+}
+

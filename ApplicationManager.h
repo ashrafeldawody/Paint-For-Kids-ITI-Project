@@ -24,6 +24,8 @@ private:
 public:	
 	ApplicationManager(); 
 	string getRandomExistingColor();
+	string getRandomExistingType();
+	void getRandomColorAndType(string &,string &);
 	~ApplicationManager();
 
 
@@ -65,5 +67,7 @@ public:
 	void restoreFigList();
 	void clearFigListBackup();
 	int numberOfShapes();
-	int countByFillColor(string color);
+	int countByColor(string );
+	int countByType(string );
+	int countByTypeAndColor(string , string);
 };

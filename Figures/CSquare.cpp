@@ -63,3 +63,8 @@ CFigure* CSquare::Clone()
 {
 	return new CSquare(*this);
 }
+
+string CSquare::getShapeType()
+{
+	return "Square";
+}
