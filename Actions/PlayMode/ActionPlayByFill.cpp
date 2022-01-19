@@ -8,12 +8,11 @@ ActionPlayByFill::ActionPlayByFill(ApplicationManager* pApp):Action(pApp)
 void ActionPlayByFill::Execute()
 {
 	GUI* pGUI = pManager->GetGUI();
-	pManager->backupFigList();
 	if(pManager->numberOfShapes() > 0) {
 		string color = pManager->getRandomExistingColor();
 		int numberOfShapesOfColor = pManager->countByFillColor(color);
 
-		pGUI->PrintMessage("Pick All "+ color + " Shapes" + to_string(numberOfShapesOfColor));
+		pGUI->PrintMessage("Pick All "+ color + " Shapes");
 		for (int i = 0; i < numberOfShapesOfColor; i++) {
 			int x, y;
 			pGUI->getPointInsideDrawArea(x,y);
@@ -36,14 +35,16 @@ void ActionPlayByFill::Execute()
 			}
 			pGUI->PrintMessage("Correct: "+ to_string(correct) + " || Wrong:" + to_string(wrong));
 		}
+		if (correct > wrong) {
+			pGUI->PrintMessage("You Won ^_^ " + to_string(correct) + " / " + to_string(wrong));
+		}
+		else {
+			pGUI->PrintMessage("You Lost :(" + to_string(correct) + " / " + to_string(wrong));
+		}
 	}
 	else {
 		pGUI->PrintMessage("There is no shapes");
 	}
-	if (correct > wrong) {
-		pGUI->PrintMessage("You Won ^_^");
-	}
-	else {
-		pGUI->PrintMessage("You Lost :(");
-	}
+
+
 }

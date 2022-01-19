@@ -139,7 +139,7 @@ public:
 			}
 			//[3] User clicks on the status bar
 			return STATUS;
-
+			
 		}else if (UI.InterfaceMode == MODE_RESIZE) {
 			if (pointInsideToolBar(y))
 			{
@@ -177,7 +177,13 @@ public:
 				default: return EMPTY;	//A click on empty place in desgin toolbar
 				}
 			}
-			return ACTION_TO_PLAY;
+			//[2] User clicks on the drawing area
+			if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+			{
+				return DRAWING_AREA;
+			}
+			//[3] User clicks on the status bar
+			return STATUS;
 		}
 
 	}

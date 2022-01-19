@@ -14,11 +14,13 @@
 #include "Actions/DrawMode/SendBackBringFront/ActionSendBack.h"
 #include "Actions/DrawMode/SaveLoad/ActionLoad.h"
 #include "Actions/DrawMode/SaveLoad/ActionSave.h"
+#include "Actions/DrawMode/ActionToPlay.h"
 
 #include "Actions/PlayMode/ActionPlayByFill.h"
 #include "Actions/PlayMode/ActionPlayByType.h"
 #include "Actions/PlayMode/ActionPlayByFILLTYPE.h"
 #include "Actions/PlayMode/ActionToDraw.h"
+#include "Actions/PlayMode/ActionNewGame.h"
 
 //Constructor
 ApplicationManager::ApplicationManager()
@@ -158,8 +160,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = ResizeAction(4);
 			break;
 		case ACTION_TO_PLAY:
-			pGUI->CreatePlayToolBar();
+			newAct = new ActionToPlay(this);
 			break;
+
 		//play mode
 		case ACTION_PLAY_FILL:
 			newAct = new ActionPlayByFill(this);
@@ -172,6 +175,9 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 		case ACTION_TO_DRAW:
 			newAct = new ActionToDraw(this);
+			break;
+		case ACTION_PLAY_RESET:
+			newAct = new ActionNewGame(this);
 			break;
 		case EXIT:
 			///create ExitAction here
@@ -347,7 +353,7 @@ void ApplicationManager::backupFigList()
 		FigListBackup[i] = FigList[i]->Clone();
 	}
 	FigCountBackup = FigCount;
-	
+	cout << "Backup\n";
 }
 void ApplicationManager::restoreFigList()
 {
@@ -355,14 +361,18 @@ void ApplicationManager::restoreFigList()
 		FigList[i] = FigListBackup[i]->Clone();
 	}
 	FigCount = FigCountBackup;
-	clearFigListBackup();
 	UpdateInterface();
+	cout << "Restore\n";
+
 }
 
 void ApplicationManager::clearFigListBackup() {
-	for (int i = 0; i < FigCountBackup; i++)
+	for (int i = 0; i < FigCountBackup; i++){
 		delete FigListBackup[i];
+	}
 	FigCountBackup = 0;
+	cout << "Clear\n";
+
 }
 int ApplicationManager::numberOfShapes()
 {
@@ -389,8 +399,10 @@ string ApplicationManager::getRandomExistingColor()
 //Destructor
 ApplicationManager::~ApplicationManager()
 {
-	for (int i = 0; i < FigCount; i++)
+	for (int i = 0; i < FigCount; i++){
 		delete FigList[i];
+		delete FigListBackup[i];
+	}
 	delete pGUI;
 
 }

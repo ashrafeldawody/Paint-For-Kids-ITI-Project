@@ -152,6 +152,8 @@
     <ClCompile Include="Actions\PlayMode\ActionPlayByFILLTYPE.cpp" />
     <ClCompile Include="Actions\PlayMode\ActionPlayByType.cpp" />
     <ClCompile Include="Actions\PlayMode\ActionToDraw.cpp" />
+    <ClCompile Include="Actions\DrawMode\ActionToPlay.cpp" />
+    <ClCompile Include="Actions\PlayMode\ActionNewGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMUgraphicsLib\auxil.h">
@@ -255,6 +257,8 @@
     <ClInclude Include="Actions\PlayMode\ActionPlayByFILLTYPE.h" />
     <ClInclude Include="Actions\PlayMode\ActionPlayByType.h" />
     <ClInclude Include="Actions\PlayMode\ActionToDraw.h" />
+    <ClInclude Include="Actions\DrawMode\ActionToPlay.h" />
+    <ClInclude Include="Actions\PlayMode\ActionNewGame.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PT Project.rc" />

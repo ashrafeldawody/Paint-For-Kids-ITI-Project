@@ -13,4 +13,6 @@ void ActionToDraw::Execute()
 	pGUI->ClearToolBarArea();
 	pGUI->CreateDrawToolBar();
 	pManager->restoreFigList();	
+	pManager->clearFigListBackup();
+	UI.InterfaceMode == MODE_DRAW;
 }
