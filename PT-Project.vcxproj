@@ -129,6 +129,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Actions\DrawMode\Exit\ActionExit.cpp" />
     <ClCompile Include="Actions\DrawMode\ActionToPlay.cpp" />
     <ClCompile Include="Actions\DrawMode\AddFigures\ActionAddEllipse.cpp" />
     <ClCompile Include="Actions\DrawMode\AddFigures\ActionAddHexagon.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Actions\DrawMode\Exit\ActionExit.h" />
     <ClInclude Include="Actions\ActionAddEllipse.h" />
     <ClInclude Include="Actions\ActionAddHexagon.h" />
     <ClInclude Include="Actions\DrawMode\ActionToPlay.h" />

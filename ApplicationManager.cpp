@@ -15,6 +15,7 @@
 #include "Actions/DrawMode/SaveLoad/ActionLoad.h"
 #include "Actions/DrawMode/SaveLoad/ActionSave.h"
 #include "Actions/DrawMode/ActionToPlay.h"
+#include "Actions/DrawMode/Exit/ActionExit.h"
 
 #include "Actions/PlayMode/ActionPlayByFill.h"
 #include "Actions/PlayMode/ActionPlayByType.h"
@@ -56,10 +57,8 @@ void ApplicationManager::Run()
 		//4- Update the interface
 		UpdateInterface();	
 
-	}while(ActType != EXIT);
-	
+	} while (ActType != EXIT);
 }
-
 
 //==================================================================================//
 //								Actions Related Functions							//
@@ -113,7 +112,10 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionBringFront(this);
 			break;
 		case ACTION_SAVE:
-			newAct = new ActionSave(this);
+			if (FigCount == 0 && Helpers::getColorName(UI.BkGrndColor) == "LIGHTGOLDENRODYELLOW")
+				pGUI->PrintMessage("You must first make some changes in order to save them");
+			else
+				newAct = new ActionSave(this, FigCount);
 			break;
 		case ACTION_LOAD:
 			newAct = new ActionLoad(this);
@@ -180,9 +182,10 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionNewGame(this);
 			break;
 		case EXIT:
-			cout << "exit";
+			if (FigCount != 0 || Helpers::getColorName(UI.BkGrndColor) != "LIGHTGOLDENRODYELLOW")
+				newAct = new ActionExit(this);
 			break;
-		
+
 		case STATUS:	//a click on the status bar ==> no action
 			return NULL;
 			break;
@@ -282,30 +285,6 @@ int ApplicationManager::getSelectedIndex() const
 		if (FigList[i]->IsSelected())
 			return i;
 	return -1;
-}
-
-// -- For Single Figure Deleted 
-void ApplicationManager::singleFigureDeleted()
-{
-	for (int i = 0; i < FigCount; i++) 
-	{
-		if (FigList[i]->IsSelected())
-		{
-			delete FigList[i];
-			FigList[i] = NULL;
-			FigCount--;
-			shiftFigList(i);
-			break;
-		}
-	}
-}
-// -- to shift all next item in FigList and remove null items
-void ApplicationManager::shiftFigList (int _figCount)
-{
-	for (int j = _figCount; j < FigCount; j++) 
-		{
-			FigList[j] = FigList[j + 1];
-		}
 }
 
 void ApplicationManager::figListStringArray(string strList[])
@@ -422,14 +401,66 @@ void ApplicationManager::getRandomColorAndType(string &type,string &color)
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////
-//Destructor
+//==================================================================================//
+//							For Single Figure Deleted								//
+//==================================================================================//
+void ApplicationManager::singleFigureDeleted()
+{
+	for (int i = 0; i < FigCount; i++)
+	{
+		if (FigList[i]->IsSelected())
+		{
+			delete FigList[i];
+			FigList[i] = NULL;
+			FigCount--;
+			shiftFigList(i);
+			break;
+		}
+	}
+}
+
+
+//==================================================================================//
+//			  to shift all next item in FigList and remove null items				//
+//==================================================================================//
+void ApplicationManager::shiftFigList(int _figCount)
+{
+	for (int j = _figCount; j < FigCount; j++)
+	{
+		FigList[j] = FigList[j + 1];
+	}
+}
+
+
+//==================================================================================//
+//				     	Call the Save function for each Figure						//
+//==================================================================================//
+void ApplicationManager::SaveFig(ofstream& Out)   
+{
+	for (int i = 0; i < FigCount; ++i)
+		FigList[i]->Save(Out);
+}
+
+
+//==================================================================================//
+//			  		for each figure FigList, make it points to NULL					//
+//==================================================================================//
+void ApplicationManager::LoadFig()  
+{
+	for (int i = 0; i < FigCount; ++i)
+		FigList[i] = NULL;
+		FigCount = 0;
+}
+
+
+//==================================================================================//
+//			  						Destructor										//
+//==================================================================================//
 ApplicationManager::~ApplicationManager()
 {
-	for (int i = 0; i < FigCount; i++){
+	for (int i = 0; i < FigCount; i++) {
 		delete FigList[i];
 		delete FigListBackup[i];
 	}
 	delete pGUI;
-
 }

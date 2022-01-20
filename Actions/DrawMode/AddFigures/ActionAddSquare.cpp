@@ -50,4 +50,5 @@ void ActionAddSquare::Execute()
 
 	//Step 4 - Add the Square to the list of figures
 	pManager->AddFigure(R);
+
 }

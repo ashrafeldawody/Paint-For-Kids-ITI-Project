@@ -5,7 +5,7 @@ CFigure::CFigure(GfxInfo FigureGfxInfo)
 	FigGfxInfo = FigureGfxInfo;
 	Selected = false;
 }
-
+CFigure::CFigure() { } //Use it to "save & load" I want an object from the classes that inherent from CFigure
 void CFigure::SetID(int _ID)
 {
 	ID = _ID;
@@ -36,7 +36,6 @@ void CFigure::ChngDrawClr(color Dclr){
 
 void CFigure::ChngFillClr(color Fclr)
 {	
-	FigGfxInfo.isFilled = (Fclr == BLACK? false:true);
+	FigGfxInfo.isFilled = true;
 	FigGfxInfo.FillClr = Fclr; 
 }
-

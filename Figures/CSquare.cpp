@@ -1,17 +1,16 @@
 #include "CSquare.h"
 
+CSquare::CSquare() {}
 
 CSquare::CSquare(Point P1, int len, GfxInfo FigureGfxInfo):CFigure(FigureGfxInfo)
 {
 	TopLeftCorner = P1;
 	length = len;
 }
-	
 
 void CSquare::DrawMe(GUI* pGUI) 
 {
 	pGUI->DrawSquare(TopLeftCorner, length, FigGfxInfo, Selected);
-
 }
 Point CSquare::getSecondPoint() {
 	Point p;
@@ -41,20 +40,7 @@ bool CSquare::Resize(float size)
 	length /= size;
 	return false;
 }
-string CSquare::getSaveData()
-{
-	string DrawColor = Helpers::getColorName(FigGfxInfo.DrawClr);
-	string shapeInfo = "SQUARE\t" + to_string(ID) + "\t" + to_string(TopLeftCorner.x) + "\t" + to_string(TopLeftCorner.y) + "\t" + to_string(length) + "\t" + DrawColor;
-	if (FigGfxInfo.isFilled)
-	{
-		string fillColor = Helpers::getColorName(FigGfxInfo.FillClr);
-		shapeInfo += "\t" + fillColor;
-	}
-	else {
-		shapeInfo += "\tNO_FILL";
-	}
-	return shapeInfo;
-}
+
 string CSquare::GetShapeInfo()
 {
 	string DrawColor = Helpers::getColorName(FigGfxInfo.DrawClr);
@@ -76,3 +62,46 @@ string CSquare::getShapeType()
 	return "Square";
 }
 
+
+// for save & load
+void CSquare::Save(ofstream& OutFile)
+{
+	//to Convert color from Enum color to String Color
+	string DrawColor = Helpers::getColorName(this->FigGfxInfo.DrawClr);
+	string fillColor = Helpers::getColorName(this->FigGfxInfo.FillClr);
+
+	OutFile << "Square\t"
+		<< ID << "\t" << this->TopLeftCorner.x << "\t" << this->TopLeftCorner.y << "\t"
+		<< this->length << "\t"
+		<< DrawColor << "\t";
+	if (this->FigGfxInfo.isFilled)
+		OutFile << fillColor << "\t";
+	else
+		OutFile << "NON-FILLED\t";
+
+	OutFile << this->FigGfxInfo.BorderWdth << "\n";
+
+}
+void CSquare::Load(ifstream& Infile)
+{
+	string color;
+
+	Infile >> ID >> TopLeftCorner.x >> TopLeftCorner.y	>> length;
+
+	Infile >> color;
+	//to Convert color from String color to Enum Color
+	FigGfxInfo.DrawClr = Helpers::getColorFromString(color);
+	
+	Infile >> color;
+	if (color == "NON-FILLED") {
+		FigGfxInfo.isFilled = false;
+		FigGfxInfo.FillClr = NULL;
+	}
+	else
+	{
+		FigGfxInfo.FillClr = Helpers::getColorFromString(color);
+		FigGfxInfo.isFilled = true;
+	}
+	Infile >>FigGfxInfo.BorderWdth;
+	Selected = false;
+}

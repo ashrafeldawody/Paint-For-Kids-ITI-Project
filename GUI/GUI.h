@@ -52,7 +52,7 @@ public:
 		pWind->WaitMouseClick(x, y);	//Wait for mouse click
 	}
 
-	string GetString() const
+	string GetString(GUI* pO) const
 	{
 		string Label;
 		char Key;
@@ -67,7 +67,8 @@ public:
 				Label.resize(Label.size() - 1);
 			else
 				Label += Key;
-			PrintMessage(Label);
+			if (pO)
+				pO->PrintMessage(Label);
 		}
 	}
 

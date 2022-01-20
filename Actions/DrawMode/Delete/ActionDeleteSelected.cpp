@@ -3,17 +3,15 @@
 
 ActionDeleteSelected::ActionDeleteSelected(ApplicationManager* pApp):Action(pApp)
 {
+	pGUI = pManager->GetGUI();
 }
 
 void ActionDeleteSelected::Execute()
 {
-	GUI* pGUI = pManager->GetGUI();
-	
 	if (pManager->getSelected() != NULL)
 	{
 		pManager->singleFigureDeleted();
 		pGUI->ClearDrawArea();
-		//pManager->UpdateInterface();
 		pGUI->PrintMessage("Deleted Successfully");
 	}
 	else

@@ -1,6 +1,8 @@
 #include "CEllipse.h"
 #include<string>
 #include<fstream>
+CEllipse::CEllipse() {}
+
 CEllipse::CEllipse(Point P1, Point P2, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo) {
 	FirstPoint = P1;
 	SecondPoint = P2;
@@ -46,20 +48,7 @@ bool CEllipse::PointInFigure(int x,int y){
 	}
 	return false;
 }
-string CEllipse::getSaveData()
-{
-	string id = to_string(ID);
-	string dColor = Helpers::getColorName(FigGfxInfo.DrawClr);
-	string data = "ELLIPSE\t" + id + "\t" + to_string(FirstPoint.x) + "\t" + to_string(FirstPoint.y) + "\t" + to_string(SecondPoint.x) + "\t" + to_string(SecondPoint.y) + "\t" + dColor + "\t";
-	if (FigGfxInfo.isFilled)
-	{
-		data += Helpers::getColorName(FigGfxInfo.FillClr);
-	}
-	else {
-		data += "NO_Fill";
-	}
-	return data;
-}
+
 string CEllipse::GetShapeInfo()
 {
 	string id = to_string(ID);
@@ -84,3 +73,47 @@ string CEllipse::getShapeType()
 {
 	return "Ellipse";
 }
+
+// for save & load
+void CEllipse::Save(ofstream& OutFile)
+{
+	//to Convert color from Enum color to String Color
+	string DrawColor = Helpers::getColorName(this->FigGfxInfo.DrawClr);
+	string fillColor = Helpers::getColorName(this->FigGfxInfo.FillClr);
+
+	OutFile << "Ellipse\t"
+		<< ID << "\t" << this->FirstPoint.x << "\t" << this->FirstPoint.y << "\t"
+		<< this->SecondPoint.x << "\t" << this->SecondPoint.y << "\t"
+		<< DrawColor << "\t";
+	if (this->FigGfxInfo.isFilled)
+		OutFile << fillColor << "\t";
+	else
+		OutFile << "NON-FILLED\t";
+
+	OutFile << this->FigGfxInfo.BorderWdth << "\n";
+
+}
+void CEllipse::Load(ifstream& Infile)
+{
+	string color;
+
+	Infile >> ID >> FirstPoint.x >> FirstPoint.y >> SecondPoint.x >>  SecondPoint.y;
+
+	Infile >> color;
+	//to Convert color from String color to Enum Color
+	FigGfxInfo.DrawClr = Helpers::getColorFromString(color);
+
+	Infile >> color;
+	if (color == "NON-FILLED") {
+		FigGfxInfo.isFilled = false;
+		FigGfxInfo.FillClr = NULL;
+	}
+	else
+	{
+		FigGfxInfo.FillClr = Helpers::getColorFromString(color);
+		FigGfxInfo.isFilled = true;
+	}
+	Infile >>FigGfxInfo.BorderWdth;
+	Selected = false;
+}
+
