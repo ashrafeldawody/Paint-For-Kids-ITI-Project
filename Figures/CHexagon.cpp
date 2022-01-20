@@ -36,41 +36,18 @@ bool CHexagon::Resize(float factor)
     radius *= factor;
     //if one of the points outside draw area..
     if (generatePoints()) return true;
+
     //change radius back to it's original value
     radius /= factor;
     return false;
+
 }
 bool CHexagon::PointInFigure(int x,int y)
 {
-    Point p;
-    p.x = x;
-    p.y = y;
-    // Create a point for line segment from p to infinite 
-    Point extreme = { 10000, y };
-
-    // Count intersections of the above line with sides of polygon 
-    int count = 0, i = 0;
-    do
-    {
-        int next = (i + 1) % 6;
-
-        // Check if the line segment from 'p' to 'extreme' intersects 
-        // with the line segment from 'polygon[i]' to 'polygon[next]' 
-        if (Helpers::doIntersect(points[i], points[next], p, extreme))
-        {
-            // If the point 'p' is collinear with line segment 'i-next', 
-            // then check if it lies on segment. If it lies, return true, 
-            // otherwise false 
-            if (Helpers::orientation(points[i], p, points[next]) == 0)
-                return Helpers::onSegment(points[i], p, points[next]);
-
-            count++;
-        }
-        i = next;
-    } while (i != 0);
-
-    // Return true if count is odd, false otherwise 
-    return count%2 == 1;
+        float dx = abs(x - center.x) / radius;
+        float dy = abs(y - center.y) / radius;
+        float a = 0.25 * sqrt(3.0);
+        return (dy < a) && (a * dx + 0.25 * dy < 0.5 * a);
 }
 
 string CHexagon::getSaveData()

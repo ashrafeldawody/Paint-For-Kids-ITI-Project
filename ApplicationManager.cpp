@@ -180,7 +180,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			newAct = new ActionNewGame(this);
 			break;
 		case EXIT:
-			///create ExitAction here
+			cout << "exit";
 			break;
 		
 		case STATUS:	//a click on the status bar ==> no action
@@ -404,9 +404,8 @@ string ApplicationManager::getRandomExistingColor()
 
 	color tempClr = FigList[RandomIndex]->getFillColor();
 
-	if (tempClr != NULL){
-		return Helpers::getColorName(tempClr);
-	}
+	return Helpers::getColorName(tempClr);
+
 }
 string ApplicationManager::getRandomExistingType()
 {

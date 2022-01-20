@@ -19,12 +19,8 @@ void ActionAddHexagon::Execute()
 	SqrGfxInfo.FillClr = pGUI->getCrntFillColor();
 	SqrGfxInfo.BorderWdth = pGUI->getCrntPenWidth();
 
-
-
-
 	pGUI->PrintMessage("New Hexagon: Click to select Center Point");
 	pGUI->getPointInsideDrawArea(point.x, point.y);
-
 
 
 	CHexagon* R = new CHexagon(point, SqrGfxInfo);
