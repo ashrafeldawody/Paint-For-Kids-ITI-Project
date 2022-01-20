@@ -36,7 +36,7 @@ void CFigure::ChngDrawClr(color Dclr){
 
 void CFigure::ChngFillClr(color Fclr)
 {	
-	FigGfxInfo.isFilled = true;
+	FigGfxInfo.isFilled = (Fclr == BLACK? false:true);
 	FigGfxInfo.FillClr = Fclr; 
 }
 
