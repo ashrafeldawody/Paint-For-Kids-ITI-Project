@@ -18,6 +18,7 @@ public:
         if (c == DEEPPINK)  return "DEEPPINK";
         if (c == GRAY)      return "GRAY";
         if (c == ORANGE)    return "ORANGE";
+        if (c == LIGHTGOLDENRODYELLOW)    return "LIGHTGOLDENRODYELLOW"; //main background
         return "Unknown Color";
     }
     static color getColorFromString(string c) {
@@ -28,8 +29,9 @@ public:
         if (c == "DEEPPINK")  return DEEPPINK;
         if (c == "GRAY")      return GRAY;
         if (c == "ORANGE")    return ORANGE;
+        if (c == "LIGHTGOLDENRODYELLOW")    return LIGHTGOLDENRODYELLOW; //main background
         if (c == "UNFILLED")    return NULL;
-        return GREEN;
+        return LIGHTGOLDENRODYELLOW;
     }
     static bool checkPointInsideDrawArea(int x, int y) {
         if (y < UI.ToolBarHeight || y > UI.height - UI.StatusBarHeight || x > UI.width || x < 0) {

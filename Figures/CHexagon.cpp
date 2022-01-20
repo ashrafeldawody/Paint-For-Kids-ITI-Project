@@ -3,6 +3,7 @@
 
 #define PI 3.14159265
 
+CHexagon::CHexagon(){}
 CHexagon::CHexagon(Point _center, GfxInfo FigureGfxInfo) :CFigure(FigureGfxInfo)
 {
     radius = 100;
@@ -22,7 +23,6 @@ bool CHexagon::generatePoints()
     for (int i = 0; i < 6; i++) {
         points[i] = temp[i];
     }
-
     return true;
 }
 
@@ -50,22 +50,6 @@ bool CHexagon::PointInFigure(int x,int y)
         return (dy < a) && (a * dx + 0.25 * dy < 0.5 * a);
 }
 
-string CHexagon::getSaveData()
-{
-    string DrawColor = Helpers::getColorName(FigGfxInfo.DrawClr);
-    string shapeInfo = "HEXAGON\t" + to_string(ID) + "\t" + to_string(center.x) + "\t" + to_string(center.y) + "\t" + to_string(radius) + "\t" + DrawColor;
-    if (FigGfxInfo.isFilled)
-    {
-        string fillColor = Helpers::getColorName(FigGfxInfo.FillClr);
-        shapeInfo += "\t" + fillColor;
-    }
-    else
-    {
-        shapeInfo += "\tNO_FILL";
-    }
-    return shapeInfo;
-}
-
 string CHexagon::GetShapeInfo()
 {
     string DrawColor = Helpers::getColorName(FigGfxInfo.DrawClr);
@@ -89,3 +73,57 @@ string CHexagon::getShapeType()
 {
     return "Hexagon";
 }
+
+// for save & load
+void CHexagon::Save(ofstream& OutFile)
+{
+    //to Convert color from Enum color to String Color
+    string DrawColor = Helpers::getColorName(this->FigGfxInfo.DrawClr);
+    string fillColor = Helpers::getColorName(this->FigGfxInfo.FillClr);
+
+    OutFile << "Hexagon\t" << ID << "\t" 
+        << this->points[0].x << "\t" << this->points[0].y << "\t"
+        << this->points[1].x << "\t" << this->points[1].y << "\t"
+        << this->points[2].x << "\t" << this->points[2].y << "\t"
+        << this->points[3].x << "\t" << this->points[3].y << "\t"
+        << this->points[4].x << "\t" << this->points[4].y << "\t"
+        << this->points[5].x << "\t" << this->points[5].y << "\t"
+        << DrawColor << "\t";
+    if (this->FigGfxInfo.isFilled)
+        OutFile << fillColor << "\t";
+    else
+        OutFile << "NON-FILLED\t";
+
+    OutFile << this->FigGfxInfo.BorderWdth << "\n";
+
+}
+void CHexagon::Load(ifstream& Infile)
+{
+    string color;
+ 
+    Infile >> ID >>
+        points[0].x >> points[0].y >>
+        points[1].x >> points[1].y >>
+        points[2].x >> points[2].y >>
+        points[3].x >> points[3].y >>
+        points[4].x >> points[4].y >>
+        points[5].x >> points[5].y;
+
+    Infile >> color;
+    //to Convert color from String color to Enum Color
+    FigGfxInfo.DrawClr = Helpers::getColorFromString(color);
+
+    Infile >> color;
+    if (color == "NON-FILLED") {
+        FigGfxInfo.isFilled = false;
+        FigGfxInfo.FillClr = NULL;
+    }
+    else
+    {
+        FigGfxInfo.FillClr = Helpers::getColorFromString(color);
+        FigGfxInfo.isFilled = true;
+    }
+    Infile >>FigGfxInfo.BorderWdth;
+    Selected = false;
+}
+

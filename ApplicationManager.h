@@ -49,12 +49,6 @@ public:
 	GUI *GetGUI() const; //Return pointer to the interface
 	void UpdateInterface() const;	//Redraws all the drawing window
 
-	
-
-	// -- For Single Figure Delete
-	void singleFigureDeleted();
-	void shiftFigList(int _figCount);
-
 	// -- figList to array of strings
 	void figListStringArray(string[]);
 
@@ -70,4 +64,13 @@ public:
 	int countByColor(string );
 	int countByType(string );
 	int countByTypeAndColor(string , string);
+
+
+	// -- For Single Figure Delete
+	void singleFigureDeleted();
+	void shiftFigList(int _figCount);
+
+	//Save and Load
+	void SaveFig(ofstream& Out);
+	void LoadFig();
 };
