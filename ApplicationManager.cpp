@@ -88,16 +88,13 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			
 			break;
 		case ACTION_CHNG_BG_CLR:
-			pGUI->setColorBarMode(BACKGROUND_COLOR);
-			pGUI->CreateColorPickerToolBar();
+			pGUI->CreateBGColorToolBar();
 			break;
 		case ACTION_CHNG_DRAW_CLR:
-			pGUI->setColorBarMode(DRAW_COLOR);
-			pGUI->CreateColorPickerToolBar();
+			pGUI->CreateDrawColorToolBar();
 			break;
 		case ACTION_CHNG_FILL_CLR:
-			pGUI->setColorBarMode(FILL_COLOR);
-			pGUI->CreateColorPickerToolBar();
+			pGUI->CreateFillColorToolBar();
 			break;
 		case ACTION_RESIZE:
 			pGUI->CreateResizeToolBar();
@@ -122,45 +119,96 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 			break;
 
 
-		//Colors
-		case ACTION_BLACK:
-			newAct = ColorAction(BLACK);
+		//Draw Colors
+		case ACTION_DRAW_BLACK:
+			newAct = new ChangeDrawColor(this, BLACK);
 			break;
-		case ACTION_RED:
-			newAct = ColorAction(RED);
+		case ACTION_DRAW_RED:
+			newAct = new ChangeDrawColor(this, DARKCYAN);
 			break;
-		case ACTION_YELLOW:
-			newAct = ColorAction(YELLOW);
+		case ACTION_DRAW_CHOCOLATE:
+			newAct = new ChangeDrawColor(this, CHOCOLATE);
 			break;
-		case ACTION_GREEN:
-			newAct = ColorAction(GREEN);
+		case ACTION_DRAW_DARKGOLDENROD:
+			newAct = new ChangeDrawColor(this, DARKGOLDENROD);
 			break;
-		case ACTION_NAVY:
-			newAct = ColorAction(NAVY);
+		case ACTION_DRAW_DARKRED:
+			newAct = new ChangeDrawColor(this, DARKRED);
 			break;
-		case ACTION_DEEPPINK:
-			newAct = ColorAction(DEEPPINK);
+		case ACTION_DRAW_DEEPPINK:
+			newAct = new ChangeDrawColor(this, DEEPPINK);
 			break;
-		case ACTION_GRAY:
-			newAct = ColorAction(GRAY);
+		case ACTION_DRAW_OLIVEDRAB:
+			newAct = new ChangeDrawColor(this, OLIVEDRAB);
 			break;
-		case ACTION_DEEPORANGE:
-			newAct = ColorAction(ORANGE);
+
+		//Fill Colors
+		case ACTION_FILL_NONE:
+			newAct = new ChangeFillColor(this, NULL);
 			break;
+		case ACTION_FILL_DARKCYAN:
+			newAct = new ChangeFillColor(this, DARKCYAN);
+			break;
+		case ACTION_FILL_DARKMAGENTA:
+			newAct = new ChangeFillColor(this, DARKMAGENTA);
+			break;
+		case ACTION_FILL_GREEN:
+			newAct = new ChangeFillColor(this, GREEN);
+			break;
+		case ACTION_FILL_HOTPINK:
+			newAct = new ChangeFillColor(this, HOTPINK);
+			break;
+		case ACTION_FILL_INDIAN:
+			newAct = new ChangeFillColor(this, INDIAN);
+			break;
+		case ACTION_FILL_LIGHTCORAL:
+			newAct = new ChangeFillColor(this, LIGHTCORAL);
+			break;
+		case ACTION_FILL_PERU:
+			newAct = new ChangeFillColor(this, PERU);
+			break;
+		case ACTION_FILL_SIENNA:
+			newAct = new ChangeFillColor(this, SIENNA);
+			break;
+		case ACTION_FILL_SPRINGGREEN:
+			newAct = new ChangeFillColor(this, SPRINGGREEN);
+			break;
+		case ACTION_FILL_TOMATO:
+			newAct = new ChangeFillColor(this, TOMATO);
+			break;
+
+		//BG COLORS
+		case ACTION_BG_BURLYWOOD:
+			newAct = new ChangeBGColor(this, BURLYWOOD);
+			break;
+		case ACTION_BG_LIGHTGREEN:
+			newAct = new ChangeBGColor(this, LIGHTGREEN);
+			break;
+		case ACTION_BG_LIGHTYELLOW:
+			newAct = new ChangeBGColor(this, LIGHTYELLOW);
+			break;
+		case ACTION_BG_THISTLE:
+			newAct = new ChangeBGColor(this, THISTLE);
+			break;
+		case ACTION_BG_WHEAT:
+			newAct = new ChangeBGColor(this, WHEAT);
+			break;	
 
 		//resize
 		case ACTION_QUARTAR:
-			newAct = ResizeAction(0.25);
+			newAct = new ActionResizeSelected(this, 0.25);
 			break;
 		case ACTION_HALF:
-			newAct = ResizeAction(0.5);
+			newAct = new ActionResizeSelected(this, 0.5);
 			break;
 		case ACTION_DOUBLE:
-			newAct = ResizeAction(2);
+			newAct = new ActionResizeSelected(this, 2);
 			break;
 		case ACTION_2DOUBLE:
-			newAct = ResizeAction(4);
+			newAct = new ActionResizeSelected(this, 4);
 			break;
+
+
 		case ACTION_TO_PLAY:
 			newAct = new ActionToPlay(this);
 			break;
@@ -184,6 +232,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 		case EXIT:
 			if (FigCount != 0 || Helpers::getColorName(UI.BkGrndColor) != "LIGHTGOLDENRODYELLOW")
 				newAct = new ActionExit(this);
+				
 			break;
 
 		case STATUS:	//a click on the status bar ==> no action
@@ -192,25 +241,7 @@ Action* ApplicationManager::CreateAction(ActionType ActType)
 	}	
 	return newAct;
 }
-Action* ApplicationManager::ColorAction(color c) {
-	Action* newAct = NULL;
-	if (pGUI->getColorBarMode() == FILL_COLOR)
-		newAct = new ChangeFillColor(this,c);
-	else if (pGUI->getColorBarMode() == DRAW_COLOR)
-		newAct = new ChangeDrawColor(this,c);
-	else
-		newAct = new ChangeBGColor(this,c);
-	pGUI->ClearToolBarArea();
-	pGUI->CreateDrawToolBar();
-	return newAct;
-}
-Action* ApplicationManager::ResizeAction(float factor) {
-	Action* newAct = NULL;
-	newAct = new ActionResizeSelected(this,factor);
-	pGUI->ClearToolBarArea();
-	pGUI->CreateDrawToolBar();
-	return newAct;
-}
+
 //////////////////////////////////////////////////////////////////////
 //Executes the created Action
 void ApplicationManager::ExecuteAction(Action* &pAct) 

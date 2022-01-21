@@ -12,4 +12,5 @@ void ChangeBGColor::Execute()
 	UI.BkGrndColor = bgColor;
 	pGUI->PrintMessage("BackGround Color Changed Successfully");
 	pGUI->ClearDrawArea();
+	pGUI->CreateDrawToolBar();
 }

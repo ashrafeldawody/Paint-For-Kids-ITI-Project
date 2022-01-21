@@ -27,7 +27,6 @@ public:
 	virtual string getShapeType() = 0;
 	virtual CFigure * Clone() = 0;
 	virtual void DrawMe(GUI* pOut)  = 0 ;		//Draw the figure
-	void Unfill();	//unfill figure
 	void ChngDrawClr(color Dclr);	//changes the figure's drawing color
 	void ChngFillClr(color Fclr);	//changes the figure's filling color
 

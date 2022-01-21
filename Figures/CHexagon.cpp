@@ -82,12 +82,8 @@ void CHexagon::Save(ofstream& OutFile)
     string fillColor = Helpers::getColorName(this->FigGfxInfo.FillClr);
 
     OutFile << "Hexagon\t" << ID << "\t" 
-        << this->points[0].x << "\t" << this->points[0].y << "\t"
-        << this->points[1].x << "\t" << this->points[1].y << "\t"
-        << this->points[2].x << "\t" << this->points[2].y << "\t"
-        << this->points[3].x << "\t" << this->points[3].y << "\t"
-        << this->points[4].x << "\t" << this->points[4].y << "\t"
-        << this->points[5].x << "\t" << this->points[5].y << "\t"
+        << this->center.x << "\t" << this->center.y << "\t"
+        << radius << "\t"
         << DrawColor << "\t";
     if (this->FigGfxInfo.isFilled)
         OutFile << fillColor << "\t";
@@ -102,12 +98,7 @@ void CHexagon::Load(ifstream& Infile)
     string color;
  
     Infile >> ID >>
-        points[0].x >> points[0].y >>
-        points[1].x >> points[1].y >>
-        points[2].x >> points[2].y >>
-        points[3].x >> points[3].y >>
-        points[4].x >> points[4].y >>
-        points[5].x >> points[5].y;
+        center.x >> center.y >> radius;
 
     Infile >> color;
     //to Convert color from String color to Enum Color
@@ -125,5 +116,6 @@ void CHexagon::Load(ifstream& Infile)
     }
     Infile >>FigGfxInfo.BorderWdth;
     Selected = false;
+    generatePoints();
 }
 

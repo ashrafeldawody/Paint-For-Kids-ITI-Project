@@ -9,7 +9,9 @@
 enum GUI_MODE	//Graphical user interface mode
 {
 	MODE_DRAW,	//Drawing mode (startup mode)
-	MODE_PICK_COLOR,
+	MODE_PICK_FILL_COLOR,
+	MODE_PICK_DRAW_COLOR,
+	MODE_PICK_BG_COLOR,
 	MODE_RESIZE,
 	MODE_PLAY	//Playing mode
 };
@@ -45,19 +47,43 @@ enum DrawMenuItem //The items of the Draw menu (you should add more items)
 
 };
 
+enum BGColorsItem //The items of the Color menu (you should add more items)
+{
+	COLOR_BURLYWOOD,
+	COLOR_LIGHTGREEN,
+	COLOR_LIGHTYELLOW,
+	COLOR_THISTLE,
+	COLOR_WHEAT,
+
+	COLOR_BG_COUNT
+};
+enum FillColorsItem //The items of the Color menu (you should add more items)
+{
+	COLOR_NONE,
+	COLOR_DARKCYAN,
+	COLOR_DARKMAGENTA,
+	COLOR_GREEN,
+	COLOR_HOTPINK,
+	COLOR_INDIAN,
+	COLOR_LIGHTCORAL,
+	COLOR_PERU,
+	COLOR_SIENNA,
+	COLOR_SPRINGGREEN,
+	COLOR_TOMATO,
+
+	COLOR_FILL_COUNT
+};
 enum DrawColorsItem //The items of the Color menu (you should add more items)
 {
 	COLOR_BLACK,
 	COLOR_RED,
-	COLOR_YELLOW,
-	COLOR_GREEN,
-	COLOR_NAVY,
+	COLOR_CHOCOLATE,
+	COLOR_DARKGOLDENROD,
+	COLOR_DARKRED,
 	COLOR_DEEPPINK,
-	COLOR_GRAY,
-	COLOR_DEEPORANGE,
+	COLOR_OLIVEDRAB,
 
-	COLOR_COUNT
-
+	COLOR_DRAW_COUNT
 };
 enum resizeMenuItem //The items of the Resize menu (you should add more items)
 {

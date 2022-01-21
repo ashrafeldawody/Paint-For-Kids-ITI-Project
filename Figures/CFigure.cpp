@@ -24,11 +24,6 @@ color CFigure::getFillColor()
 	return FigGfxInfo.isFilled ? FigGfxInfo.FillClr : NULL;
 }
 
-void CFigure::Unfill()
-{
-	FigGfxInfo.FillClr = NULL;
-	FigGfxInfo.isFilled = false;
-}
 
 void CFigure::ChngDrawClr(color Dclr){
 	FigGfxInfo.DrawClr = Dclr; 
@@ -36,6 +31,7 @@ void CFigure::ChngDrawClr(color Dclr){
 
 void CFigure::ChngFillClr(color Fclr)
 {	
-	FigGfxInfo.isFilled = true;
-	FigGfxInfo.FillClr = Fclr; 
+	FigGfxInfo.FillClr = Fclr;
+	FigGfxInfo.isFilled = (FigGfxInfo.FillClr == NULL ? false : true);
+
 }

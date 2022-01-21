@@ -28,6 +28,6 @@ void ActionResizeSelected::Execute()
 	{
 		pGUI->PrintMessage("select the shape first");
 	}
-
+	pGUI->CreateDrawToolBar();                        
 
 }

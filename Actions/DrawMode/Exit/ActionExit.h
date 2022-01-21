@@ -4,7 +4,6 @@
 #include"../SaveLoad/ActionSave.h"
 class ActionExit : public Action
 {
-	GUI* pGUI;
 public:
 	ActionExit(ApplicationManager* pApp);
 	void Execute();

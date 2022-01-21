@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 ChangeFillColor::ChangeFillColor(ApplicationManager* pApp,color c):Action(pApp)
-{
+{ 
 	fillColor = c;
 }
 
@@ -20,5 +20,6 @@ void ChangeFillColor::Execute()
 	}
 
 	pGUI->ClearDrawArea();
+	pGUI->CreateDrawToolBar();
 }
 

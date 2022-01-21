@@ -14,7 +14,6 @@ class GUI
 public:	
 	window* pWind;	//Pointer to the Graphics Window
 public:
-	COLOR_PICK_MODE CMode;
 	GUI()
 	{
 		//Initialize user interface parameters
@@ -30,11 +29,11 @@ public:
 		UI.ToolBarHeight = 50;
 		UI.MenuItemWidth = 80;
 
-		UI.DrawColor = NAVY;	//Drawing color
+		UI.DrawColor = BLACK;	//Drawing color
 		UI.FillColor = NULL;	//Filling color
 		UI.MsgColor = RED;		//Messages color
-		UI.BkGrndColor = LIGHTGOLDENRODYELLOW;	//Background color
-		UI.HighlightColor = MAGENTA;	//This color should NOT be used to draw figures. use if for highlight only
+		UI.BkGrndColor = LIGHTYELLOW;	//Background color
+		UI.HighlightColor = NAVY;	//This color should NOT be used to draw figures. use if for highlight only
 		UI.StatusBarColor = TURQUOISE;
 		UI.PenWidth = 3;	//width of the figures frames
 
@@ -64,7 +63,7 @@ public:
 			if (Key == 13)	//ENTER key is pressed
 				return Label;
 			if (Key == 8)	//BackSpace is pressed
-				Label.resize(Label.size() - 1);
+				Label.size() > 0 ? Label.resize(Label.size() - 1) : Label.resize(0);
 			else
 				Label += Key;
 			if (pO)
@@ -114,20 +113,20 @@ public:
 			}
 			//[3] User clicks on the status bar
 			return STATUS;
-		}else if (UI.InterfaceMode == MODE_PICK_COLOR) {
+		}
+		else if (UI.InterfaceMode == MODE_PICK_DRAW_COLOR) {
 			if (pointInsideToolBar(y))
 			{
 				int ClickedItemOrder = (x / UI.MenuItemWidth);
 				switch (ClickedItemOrder)
 				{
-				case COLOR_BLACK: return ACTION_BLACK;
-				case COLOR_RED: return ACTION_RED;
-				case COLOR_YELLOW: return ACTION_YELLOW;
-				case COLOR_GREEN: return ACTION_GREEN;
-				case COLOR_NAVY: return ACTION_NAVY;
-				case COLOR_DEEPPINK: return ACTION_DEEPPINK;
-				case COLOR_GRAY: return ACTION_GRAY;
-				case COLOR_DEEPORANGE: return ACTION_DEEPORANGE;
+				case COLOR_BLACK: return ACTION_DRAW_BLACK;
+				case COLOR_DARKCYAN: return ACTION_DRAW_RED;
+				case COLOR_CHOCOLATE: return ACTION_DRAW_CHOCOLATE;
+				case COLOR_DARKGOLDENROD: return ACTION_DRAW_DARKGOLDENROD;
+				case COLOR_DARKRED: return ACTION_DRAW_DARKRED;
+				case COLOR_DEEPPINK: return ACTION_DRAW_DEEPPINK;
+				case COLOR_OLIVEDRAB: return ACTION_DRAW_OLIVEDRAB;
 
 				default: return EMPTY;	//A click on empty place in desgin toolbar
 				}
@@ -140,7 +139,63 @@ public:
 			}
 			//[3] User clicks on the status bar
 			return STATUS;
-			
+
+		}
+		else if (UI.InterfaceMode == MODE_PICK_FILL_COLOR) {
+			if (pointInsideToolBar(y))
+			{
+				int ClickedItemOrder = (x / UI.MenuItemWidth);
+				switch (ClickedItemOrder)
+				{
+				case COLOR_NONE: return ACTION_FILL_NONE;
+				case COLOR_DARKCYAN: return ACTION_FILL_DARKCYAN;
+				case COLOR_DARKMAGENTA: return ACTION_FILL_DARKMAGENTA;
+				case COLOR_GREEN: return ACTION_FILL_GREEN;
+				case COLOR_HOTPINK: return ACTION_FILL_HOTPINK;
+				case COLOR_INDIAN: return ACTION_FILL_INDIAN;
+				case COLOR_LIGHTCORAL: return ACTION_FILL_LIGHTCORAL;
+				case COLOR_PERU: return ACTION_FILL_PERU;
+				case COLOR_SIENNA: return ACTION_FILL_SIENNA;
+				case COLOR_SPRINGGREEN: return ACTION_FILL_SPRINGGREEN;
+				case COLOR_TOMATO: return ACTION_FILL_TOMATO;
+
+				default: return EMPTY;	//A click on empty place in desgin toolbar
+				}
+			}
+
+			//[2] User clicks on the drawing area
+			if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+			{
+				return DRAWING_AREA;
+			}
+			//[3] User clicks on the status bar
+			return STATUS;
+
+		}
+		else if (UI.InterfaceMode == MODE_PICK_BG_COLOR) {
+			if (pointInsideToolBar(y))
+			{
+				int ClickedItemOrder = (x / UI.MenuItemWidth);
+				switch (ClickedItemOrder)
+				{
+				case COLOR_BURLYWOOD: return ACTION_BG_BURLYWOOD;
+				case COLOR_LIGHTGREEN: return ACTION_BG_LIGHTGREEN;
+				case COLOR_LIGHTYELLOW: return ACTION_BG_LIGHTYELLOW;
+				case COLOR_THISTLE: return ACTION_BG_THISTLE;
+				case COLOR_WHEAT: return ACTION_BG_WHEAT;
+
+				default: return EMPTY;	//A click on empty place in desgin toolbar
+				}
+			}
+
+			//[2] User clicks on the drawing area
+			if (y >= UI.ToolBarHeight && y < UI.height - UI.StatusBarHeight)
+			{
+				return DRAWING_AREA;
+			}
+			//[3] User clicks on the status bar
+			return STATUS;
+
 		}else if (UI.InterfaceMode == MODE_RESIZE) {
 			if (pointInsideToolBar(y))
 			{
@@ -255,33 +310,76 @@ public:
 		pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 
 	}
-	void CreateColorPickerToolBar() const
+	void CreateDrawColorToolBar() const
 	{
-		UI.InterfaceMode = MODE_PICK_COLOR;
+		UI.InterfaceMode = MODE_PICK_DRAW_COLOR;
 		ClearToolBarArea();
-		string ColorsMenuImages[COLOR_COUNT];
-		if(CMode == FILL_COLOR)
-			ColorsMenuImages[COLOR_BLACK] = "images\\ColorMenu\\none.jpg";
-		else
-			ColorsMenuImages[COLOR_BLACK] = "images\\ColorMenu\\black.jpg";
-			ColorsMenuImages[COLOR_GRAY] = "images\\ColorMenu\\gray.jpg";
-			ColorsMenuImages[COLOR_RED] = "images\\ColorMenu\\red.jpg";
-			ColorsMenuImages[COLOR_YELLOW] = "images\\ColorMenu\\yellow.jpg";
-			ColorsMenuImages[COLOR_GREEN] = "images\\ColorMenu\\green.jpg";
-			ColorsMenuImages[COLOR_NAVY] = "images\\ColorMenu\\navy.jpg";
-			ColorsMenuImages[COLOR_DEEPORANGE] = "images\\ColorMenu\\darkorange.jpg";
-			ColorsMenuImages[COLOR_DEEPPINK] = "images\\ColorMenu\\deeppink.jpg";
+		string ColorsMenuImages[COLOR_DRAW_COUNT];
+			ColorsMenuImages[COLOR_BLACK] = "images\\DrawColorMenu\\BLACK.jpg";
+			ColorsMenuImages[COLOR_RED] = "images\\DrawColorMenu\\RED.jpg";
+			ColorsMenuImages[COLOR_CHOCOLATE] = "images\\DrawColorMenu\\CHOCOLATE.jpg";
+			ColorsMenuImages[COLOR_DARKGOLDENROD] = "images\\DrawColorMenu\\DARKGOLDENROD.jpg";
+			ColorsMenuImages[COLOR_DARKRED] = "images\\DrawColorMenu\\DARKRED.jpg";
+			ColorsMenuImages[COLOR_DEEPPINK] = "images\\DrawColorMenu\\DEEPPINK.jpg";
+			ColorsMenuImages[COLOR_OLIVEDRAB] = "images\\DrawColorMenu\\OLIVEDRAB.jpg";
 
 		//TODO: Prepare images for each menu item and add it to the list
 		ClearToolBarArea();
 		//Draw menu item one image at a time
-		for (int i = 0; i < COLOR_COUNT; i++)
+		for (int i = 0; i < COLOR_DRAW_COUNT; i++)
 			pWind->DrawImage(ColorsMenuImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
 
 		//Draw a line under the toolbar
 		pWind->SetPen(RED, 3);
 		pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+	}
+	void CreateFillColorToolBar() const
+	{
+		UI.InterfaceMode = MODE_PICK_FILL_COLOR;
+		ClearToolBarArea();
+		string ColorsMenuImages[COLOR_FILL_COUNT];
+			ColorsMenuImages[COLOR_NONE] = "images\\fillColorMenu\\NONE.jpg";
+			ColorsMenuImages[COLOR_DARKCYAN] = "images\\fillColorMenu\\DARKCYAN.jpg";
+			ColorsMenuImages[COLOR_DARKMAGENTA] = "images\\fillColorMenu\\DARKMAGENTA.jpg";
+			ColorsMenuImages[COLOR_GREEN] = "images\\fillColorMenu\\GREEN.jpg";
+			ColorsMenuImages[COLOR_HOTPINK] = "images\\fillColorMenu\\HOTPINK.jpg";
+			ColorsMenuImages[COLOR_INDIAN] = "images\\fillColorMenu\\INDIAN.jpg";
+			ColorsMenuImages[COLOR_LIGHTCORAL] = "images\\fillColorMenu\\LIGHTCORAL.jpg";
+			ColorsMenuImages[COLOR_PERU] = "images\\fillColorMenu\\PERU.jpg";
+			ColorsMenuImages[COLOR_SIENNA] = "images\\fillColorMenu\\SIENNA.jpg";
+			ColorsMenuImages[COLOR_SPRINGGREEN] = "images\\fillColorMenu\\SPRINGGREEN.jpg";
+			ColorsMenuImages[COLOR_TOMATO] = "images\\fillColorMenu\\TOMATO.jpg";
 
+		//TODO: Prepare images for each menu item and add it to the list
+		ClearToolBarArea();
+		//Draw menu item one image at a time
+		for (int i = 0; i < COLOR_FILL_COUNT; i++)
+			pWind->DrawImage(ColorsMenuImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+		//Draw a line under the toolbar
+		pWind->SetPen(RED, 3);
+		pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
+	}
+	void CreateBGColorToolBar() const
+	{
+		UI.InterfaceMode = MODE_PICK_BG_COLOR;
+		ClearToolBarArea();
+		string ColorsMenuImages[COLOR_BG_COUNT];
+			ColorsMenuImages[COLOR_BURLYWOOD] = "images\\bgColorMenu\\BURLYWOOD.jpg";
+			ColorsMenuImages[COLOR_LIGHTGREEN] = "images\\bgColorMenu\\LIGHTGREEN.jpg";
+			ColorsMenuImages[COLOR_LIGHTYELLOW] = "images\\bgColorMenu\\LIGHTYELLOW.jpg";
+			ColorsMenuImages[COLOR_THISTLE] = "images\\bgColorMenu\\THISTLE.jpg";
+			ColorsMenuImages[COLOR_WHEAT] = "images\\bgColorMenu\\WHEAT.jpg";
+
+		//TODO: Prepare images for each menu item and add it to the list
+		ClearToolBarArea();
+		//Draw menu item one image at a time
+		for (int i = 0; i < COLOR_BG_COUNT; i++)
+			pWind->DrawImage(ColorsMenuImages[i], i * UI.MenuItemWidth, 0, UI.MenuItemWidth, UI.ToolBarHeight);
+
+		//Draw a line under the toolbar
+		pWind->SetPen(RED, 3);
+		pWind->DrawLine(0, UI.ToolBarHeight, UI.width, UI.ToolBarHeight);
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////
 	void CreateResizeToolBar() const
@@ -462,14 +560,7 @@ public:
 		else
 			return false;
 	}
-	COLOR_PICK_MODE getColorBarMode()
-	{
-		return CMode;
-	}
-	void setColorBarMode(COLOR_PICK_MODE mode)
-	{
-		CMode = mode;
-	}
+
 	~GUI()
 	{
 		delete pWind;

@@ -21,6 +21,7 @@ void ChangeDrawColor::Execute()
 	}
 
 	pGUI->ClearDrawArea();
+	pGUI->CreateDrawToolBar();
 }
 
 
