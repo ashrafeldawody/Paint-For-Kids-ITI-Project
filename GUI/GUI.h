@@ -407,7 +407,7 @@ public:
 		GetPointClicked(x, y);
 		while ((y < UI.StatusBarHeight || y > UI.height - UI.StatusBarHeight))
 		{
-			PrintMessage("Please, Choose a valid Point");
+			PrintMessage("Please choose a point inside draw area");
 			GetPointClicked(x, y);
 		}
 	}
