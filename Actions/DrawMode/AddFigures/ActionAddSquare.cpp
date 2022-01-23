@@ -44,7 +44,10 @@ void ActionAddSquare::Execute()
 	//The square side length would be the longer distance between the two points coordinates
 	int SideLength = max(abs(P1.x-P2.x), abs(P1.y-P2.y));
 
-
+	if (!Helpers::checkPointInsideDrawArea(P1.x, P1.y) || !Helpers::checkPointInsideDrawArea(P1.x + SideLength, P1.y + SideLength)) {
+		pGUI->PrintMessage("Shape can't fit into the drawing area");
+		return;
+	}
 	//Step 3 - Create a Square with the parameters read from the user
 	CSquare *R=new CSquare(topLeft, SideLength, SqrGfxInfo);
 
